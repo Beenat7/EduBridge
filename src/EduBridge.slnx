@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="EduBridge.Api/EduBridge.Api.csproj" />
+  <Project Path="EduBridge.Application/EduBridge.Application.csproj" />
+  <Project Path="EduBridge.Domain/EduBridge.Domain.csproj" />
+  <Project Path="EduBridge.Infrastructure/EduBridge.Infrastructure.csproj" />
+</Solution>
