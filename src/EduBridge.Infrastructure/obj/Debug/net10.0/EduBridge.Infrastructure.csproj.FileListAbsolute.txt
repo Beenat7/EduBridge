@@ -15,3 +15,4 @@ C:\Users\mmmm\EduBridge\src\EduBridge.Infrastructure\obj\Debug\net10.0\EduBridge
 C:\Users\mmmm\EduBridge\src\EduBridge.Infrastructure\obj\Debug\net10.0\refint\EduBridge.Infrastructure.dll
 C:\Users\mmmm\EduBridge\src\EduBridge.Infrastructure\obj\Debug\net10.0\EduBridge.Infrastructure.pdb
 C:\Users\mmmm\EduBridge\src\EduBridge.Infrastructure\obj\Debug\net10.0\ref\EduBridge.Infrastructure.dll
+C:\Users\mmmm\EduBridge\src\EduBridge.Infrastructure\obj\Debug\net10.0\EduBridge.Infrastructure.sourcelink.json

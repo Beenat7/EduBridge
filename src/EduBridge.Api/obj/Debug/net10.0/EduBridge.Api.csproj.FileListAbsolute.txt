@@ -37,3 +37,4 @@ C:\Users\mmmm\EduBridge\src\EduBridge.Api\obj\Debug\net10.0\refint\EduBridge.Api
 C:\Users\mmmm\EduBridge\src\EduBridge.Api\obj\Debug\net10.0\EduBridge.Api.pdb
 C:\Users\mmmm\EduBridge\src\EduBridge.Api\obj\Debug\net10.0\EduBridge.Api.genruntimeconfig.cache
 C:\Users\mmmm\EduBridge\src\EduBridge.Api\obj\Debug\net10.0\ref\EduBridge.Api.dll
+C:\Users\mmmm\EduBridge\src\EduBridge.Api\obj\Debug\net10.0\EduBridge.Api.sourcelink.json

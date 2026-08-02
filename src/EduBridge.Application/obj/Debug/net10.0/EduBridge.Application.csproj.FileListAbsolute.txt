@@ -13,3 +13,4 @@ C:\Users\mmmm\EduBridge\src\EduBridge.Application\obj\Debug\net10.0\EduBridge.Ap
 C:\Users\mmmm\EduBridge\src\EduBridge.Application\obj\Debug\net10.0\refint\EduBridge.Application.dll
 C:\Users\mmmm\EduBridge\src\EduBridge.Application\obj\Debug\net10.0\EduBridge.Application.pdb
 c:\Users\mmmm\EduBridge\src\EduBridge.Application\obj\Debug\net10.0\ref\EduBridge.Application.dll
+C:\Users\mmmm\EduBridge\src\EduBridge.Application\obj\Debug\net10.0\EduBridge.Application.sourcelink.json

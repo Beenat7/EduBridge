@@ -9,3 +9,4 @@ C:\Users\mmmm\EduBridge\src\EduBridge.Domain\obj\Debug\net10.0\EduBridge.Domain.
 C:\Users\mmmm\EduBridge\src\EduBridge.Domain\obj\Debug\net10.0\refint\EduBridge.Domain.dll
 C:\Users\mmmm\EduBridge\src\EduBridge.Domain\obj\Debug\net10.0\EduBridge.Domain.pdb
 C:\Users\mmmm\EduBridge\src\EduBridge.Domain\obj\Debug\net10.0\ref\EduBridge.Domain.dll
+C:\Users\mmmm\EduBridge\src\EduBridge.Domain\obj\Debug\net10.0\EduBridge.Domain.sourcelink.json
