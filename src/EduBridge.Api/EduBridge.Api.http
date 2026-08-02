@@ -1,6 +1,4 @@
-@EduBridge.Api_HostAddress = http://localhost:5259
+@EduBridge_HostAddress = http://localhost:5259
 
-GET {{EduBridge.Api_HostAddress}}/api/v1/schools
-Accept: application/json
-
-###
+POST {{EduBridge_HostAddress}}/api/v1/schools
+Content-Type: application/json
