@@ -4,6 +4,8 @@ using EduBridge.Application.Schools.Queries.GetSchoolById;
 using EduBridge.Application.Schools.DTOs;
 using EduBridge.Application.Schools.Commands.UpdateSchool;
 using EduBridge.Application.Schools.Commands.ArchiveSchool;
+using EduBridge.Application.Schools.Commands.ActivateSchool;
+using EduBridge.Application.Schools.Commands.DeactivateSchool;
 
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -113,10 +115,41 @@ public sealed class SchoolsController : ControllerBase
 
         return Ok(school);
     }
+    
 
+    [HttpPut("{id:guid}/activate")]
+    public async Task<ActionResult<SchoolDto>> Activate(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var school = await _sender.Send(
+            new ActivateSchoolCommand(id),
+            cancellationToken);
 
+        if (school is null)
+        {
+            return NotFound();
+        }
 
+        return Ok(school);
+    }
+ 
 
+    [HttpPut("{id:guid}/deactivate")]
+    public async Task<ActionResult<SchoolDto>> Deactivate(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var school = await _sender.Send(
+            new DeactivateSchoolCommand(id),
+            cancellationToken);
 
+        if (school is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(school);
+    }
 
 }
