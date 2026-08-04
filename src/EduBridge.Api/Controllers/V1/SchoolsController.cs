@@ -1,4 +1,7 @@
 using EduBridge.Application.Schools.Commands.CreateSchool;
+using EduBridge.Application.Schools.Queries.GetSchools;
+using EduBridge.Application.Schools.DTOs;
+
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,4 +27,18 @@ public sealed class SchoolsController : ControllerBase
         return StatusCode(
             StatusCodes.Status201Created, school);
     }
+
+    [HttpGet]
+public async Task<ActionResult<IReadOnlyList<SchoolDto>>> GetAll(
+    CancellationToken cancellationToken)
+{
+    var schools = await _sender.Send(
+        new GetSchoolsQuery(),
+        cancellationToken);
+
+    return Ok(schools);
+}
+
+
+
 }
