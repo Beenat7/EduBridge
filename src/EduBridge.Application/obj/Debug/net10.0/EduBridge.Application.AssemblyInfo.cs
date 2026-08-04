@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EduBridge.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+120bc54314bb955d4d24c504640cfed91b411563")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5da7b3139bfd874d117df85d5ce3f090fbbae5cd")]
 [assembly: System.Reflection.AssemblyProductAttribute("EduBridge.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EduBridge.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

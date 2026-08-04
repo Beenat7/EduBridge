@@ -1,5 +1,6 @@
 using EduBridge.Application.Schools.Commands.CreateSchool;
 using EduBridge.Application.Schools.Queries.GetSchools;
+using EduBridge.Application.Schools.Queries.GetSchoolById;
 using EduBridge.Application.Schools.DTOs;
 
 using MediatR;
@@ -18,27 +19,51 @@ public sealed class SchoolsController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(SchoolDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(
         CreateSchoolCommand command,
         CancellationToken cancellationToken)
     {
         var school = await _sender.Send(command, cancellationToken);
 
-        return StatusCode(
-            StatusCodes.Status201Created, school);
+        return CreatedAtAction(
+        nameof(GetById),
+        new { id = school.Id },
+        school);
+
     }
 
     [HttpGet]
-public async Task<ActionResult<IReadOnlyList<SchoolDto>>> GetAll(
-    CancellationToken cancellationToken)
-{
-    var schools = await _sender.Send(
-        new GetSchoolsQuery(),
-        cancellationToken);
+    [ProducesResponseType(typeof(IReadOnlyList<SchoolDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IReadOnlyList<SchoolDto>>> GetAll(
+        CancellationToken cancellationToken)
+    {
+        var schools = await _sender.Send(
+            new GetSchoolsQuery(),
+            cancellationToken);
 
-    return Ok(schools);
-}
+        return Ok(schools);
+    }
 
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(SchoolDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<SchoolDto>> GetById(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var school = await _sender.Send(
+            new GetSchoolByIdQuery(id),
+            cancellationToken);
+
+        if (school is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(school);
+    }
 
 
 }
