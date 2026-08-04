@@ -3,7 +3,7 @@ using EduBridge.Application.Schools.Queries.GetSchools;
 using EduBridge.Application.Schools.Queries.GetSchoolById;
 using EduBridge.Application.Schools.DTOs;
 using EduBridge.Application.Schools.Commands.UpdateSchool;
-
+using EduBridge.Application.Schools.Commands.ArchiveSchool;
 
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -94,6 +94,27 @@ public sealed class SchoolsController : ControllerBase
 
         return Ok(school);
     }
+
+    [HttpPost("{id:guid}/archive")]
+    [ProducesResponseType(typeof(SchoolDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<SchoolDto>> Archive(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var school = await _sender.Send(
+            new ArchiveSchoolCommand(id),
+            cancellationToken);
+
+        if (school is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(school);
+    }
+
+
 
 
 
