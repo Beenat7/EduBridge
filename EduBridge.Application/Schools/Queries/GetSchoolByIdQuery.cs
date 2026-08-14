@@ -1,15 +1,14 @@
 using EduBridge.Application.Interfaces;
-using EduBridge.Application.Schools.DTOs.Responses;
+using EduBridge.Domain.Entities;
 using MediatR;
 
 namespace EduBridge.Application.Schools.Queries.GetSchoolById;
 
 public sealed record GetSchoolByIdQuery(Guid Id)
-    : IRequest<SchoolResponse?>;
-
+    : IRequest<School?>;
 
 public sealed class GetSchoolByIdQueryHandler
-    : IRequestHandler<GetSchoolByIdQuery, SchoolResponse?>
+    : IRequestHandler<GetSchoolByIdQuery, School?>
 {
     private readonly ISchoolRepository _schoolRepository;
 
@@ -19,7 +18,7 @@ public sealed class GetSchoolByIdQueryHandler
         _schoolRepository = schoolRepository;
     }
 
-    public async Task<SchoolResponse?> Handle(
+    public async Task<School?> Handle(
         GetSchoolByIdQuery request,
         CancellationToken cancellationToken)
     {
@@ -27,18 +26,6 @@ public sealed class GetSchoolByIdQueryHandler
             request.Id,
             cancellationToken);
 
-        if (school is null)
-        {
-            return null;
-        }
-
-        return new SchoolResponse(
-            school.Id,
-            school.Name,
-            school.Code,
-            school.Email,
-            school.PhoneNumber,
-            school.Address,
-            school.Status.ToString());
+        return school;
     }
-}    
+}

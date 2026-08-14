@@ -1,15 +1,14 @@
 using EduBridge.Application.Interfaces;
-using EduBridge.Application.Schools.DTOs.Responses;
+using EduBridge.Domain.Entities;
 using MediatR;
 
 namespace EduBridge.Application.Schools.Commands.DeactivateSchool;
 
-public sealed record DeactivateSchoolCommand(
-    Guid Id
-) : IRequest<SchoolResponse?>;
+public sealed record DeactivateSchoolCommand(Guid Id)
+    : IRequest<School?>;
 
 public sealed class DeactivateSchoolCommandHandler
-    : IRequestHandler<DeactivateSchoolCommand, SchoolResponse?>
+    : IRequestHandler<DeactivateSchoolCommand, School?>
 {
     private readonly ISchoolRepository _schoolRepository;
 
@@ -19,7 +18,7 @@ public sealed class DeactivateSchoolCommandHandler
         _schoolRepository = schoolRepository;
     }
 
-    public async Task<SchoolResponse?> Handle(
+    public async Task<School?> Handle(
         DeactivateSchoolCommand request,
         CancellationToken cancellationToken)
     {
@@ -37,13 +36,6 @@ public sealed class DeactivateSchoolCommandHandler
         await _schoolRepository.SaveChangesAsync(
             cancellationToken);
 
-        return new SchoolResponse(
-            school.Id,
-            school.Name,
-            school.Code,
-            school.Email,
-            school.PhoneNumber,
-            school.Address,
-            school.Status.ToString());
+        return school;
     }
 }

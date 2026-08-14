@@ -1,15 +1,14 @@
 using EduBridge.Application.Interfaces;
-using EduBridge.Application.Schools.DTOs.Responses;
+using EduBridge.Domain.Entities;
 using MediatR;
 
 namespace EduBridge.Application.Schools.Commands.ArchiveSchool;
 
 public sealed record ArchiveSchoolCommand(Guid Id)
-    : IRequest<SchoolResponse?>;
-
+    : IRequest<School?>;
 
 public sealed class ArchiveSchoolCommandHandler
-    : IRequestHandler<ArchiveSchoolCommand, SchoolResponse?>
+    : IRequestHandler<ArchiveSchoolCommand, School?>
 {
     private readonly ISchoolRepository _schoolRepository;
 
@@ -19,7 +18,7 @@ public sealed class ArchiveSchoolCommandHandler
         _schoolRepository = schoolRepository;
     }
 
-    public async Task<SchoolResponse?> Handle(
+    public async Task<School?> Handle(
         ArchiveSchoolCommand request,
         CancellationToken cancellationToken)
     {
@@ -27,27 +26,17 @@ public sealed class ArchiveSchoolCommandHandler
             request.Id,
             cancellationToken);
 
-
         if (school is null)
         {
             return null;
         }
 
-
         school.Archive();
-
 
         await _schoolRepository.SaveChangesAsync(
             cancellationToken);
 
-
-        return new SchoolResponse(
-            school.Id,
-            school.Name,
-            school.Code,
-            school.Email,
-            school.PhoneNumber,
-            school.Address,
-            school.Status.ToString());
+        return school;
     }
-}    
+}
+

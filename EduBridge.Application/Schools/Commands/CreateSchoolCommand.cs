@@ -1,8 +1,7 @@
 using EduBridge.Application.Interfaces;
-using EduBridge.Application.Schools.DTOs.Responses;
 using EduBridge.Domain.Entities;
 using MediatR;
-//remove handler files
+
 namespace EduBridge.Application.Schools.Commands.CreateSchool;
 
 public sealed record CreateSchoolCommand(
@@ -11,10 +10,10 @@ public sealed record CreateSchoolCommand(
     string Email,
     string PhoneNumber,
     string Address)
-    : IRequest<SchoolResponse>;
+    : IRequest<School>;
 
-public sealed class CreateSchoolCommandHandler 
-    : IRequestHandler<CreateSchoolCommand, SchoolResponse>
+public sealed class CreateSchoolCommandHandler
+    : IRequestHandler<CreateSchoolCommand, School>
 {
     private readonly ISchoolRepository _schoolRepository;
 
@@ -24,7 +23,7 @@ public sealed class CreateSchoolCommandHandler
         _schoolRepository = schoolRepository;
     }
 
-    public async Task<SchoolResponse> Handle(
+    public async Task<School> Handle(
         CreateSchoolCommand request,
         CancellationToken cancellationToken)
     {
@@ -42,13 +41,7 @@ public sealed class CreateSchoolCommandHandler
         await _schoolRepository.SaveChangesAsync(
             cancellationToken);
 
-        return new SchoolResponse(
-            school.Id,
-            school.Name,
-            school.Code,
-            school.Email,
-            school.PhoneNumber,
-            school.Address,
-            school.Status.ToString());
+        return school;
     }
 }
+

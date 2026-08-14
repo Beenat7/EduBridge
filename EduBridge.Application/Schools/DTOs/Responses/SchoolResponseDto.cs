@@ -1,6 +1,6 @@
 namespace EduBridge.Application.Schools.DTOs.Responses;
 
-public sealed record SchoolResponse(
+public sealed record SchoolResponseDto(
     Guid Id,
     string Name,
     string Code,

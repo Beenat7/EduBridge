@@ -44,6 +44,39 @@
           }
         }
       },
+      "Mapster/10.0.11": {
+        "type": "package",
+        "dependencies": {
+          "Mapster.Core": "10.0.11"
+        },
+        "compile": {
+          "lib/net10.0/Mapster.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/Mapster.dll": {}
+        }
+      },
+      "Mapster.Core/10.0.11": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Mapster.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Mapster.Core.dll": {}
+        }
+      },
+      "Mapster.DependencyInjection/10.0.11": {
+        "type": "package",
+        "dependencies": {
+          "Mapster": "10.0.11"
+        },
+        "compile": {
+          "lib/net10.0/Mapster.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/net10.0/Mapster.DependencyInjection.dll": {}
+        }
+      },
       "MediatR/14.2.0": {
         "type": "package",
         "dependencies": {
@@ -895,6 +928,51 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "Mapster/10.0.11": {
+      "sha512": "MesrjeIg4lyaxJKVFHysc1GH4TooIuuY/RJRCgBPoFwDD3D1tngF362cKBkxhxR/8EhpfMfGLeU4nzCEz6hPaQ==",
+      "type": "package",
+      "path": "mapster/10.0.11",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net10.0/Mapster.dll",
+        "lib/net8.0/Mapster.dll",
+        "lib/net9.0/Mapster.dll",
+        "lib/netstandard2.0/Mapster.dll",
+        "mapster.10.0.11.nupkg.sha512",
+        "mapster.nuspec"
+      ]
+    },
+    "Mapster.Core/10.0.11": {
+      "sha512": "vpChY4hsk+CvIR3AFN/uQJkkP6gwYSUZFnuqgWBiTTbThbFEnB6chP7QUoSWZBcuPAnOjol09Ev7F1PVwECAIg==",
+      "type": "package",
+      "path": "mapster.core/10.0.11",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/netstandard2.0/Mapster.Core.dll",
+        "mapster.core.10.0.11.nupkg.sha512",
+        "mapster.core.nuspec"
+      ]
+    },
+    "Mapster.DependencyInjection/10.0.11": {
+      "sha512": "rdvpA2xSZ8Eyd3hGedz/23oXl07tM+cmPgxlWOOAnAX1LmRl42qtbpu8LFCOEq5Hh66MjdIEg5rj4+HcajTO6w==",
+      "type": "package",
+      "path": "mapster.dependencyinjection/10.0.11",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net10.0/Mapster.DependencyInjection.dll",
+        "lib/net8.0/Mapster.DependencyInjection.dll",
+        "lib/net9.0/Mapster.DependencyInjection.dll",
+        "lib/netstandard2.0/Mapster.DependencyInjection.dll",
+        "mapster.dependencyinjection.10.0.11.nupkg.sha512",
+        "mapster.dependencyinjection.nuspec"
       ]
     },
     "MediatR/14.2.0": {
@@ -2578,6 +2656,8 @@
       "EduBridge.Application >= 1.0.0",
       "EduBridge.Domain >= 1.0.0",
       "EduBridge.Infrastructure >= 1.0.0",
+      "Mapster >= 10.0.11",
+      "Mapster.DependencyInjection >= 10.0.11",
       "Microsoft.AspNetCore.OpenApi >= 10.0.8",
       "Microsoft.EntityFrameworkCore.Design >= 10.0.10",
       "Scalar.AspNetCore >= 2.16.17"
@@ -2645,6 +2725,14 @@
         "framework": "net10.0",
         "targetAlias": "net10.0",
         "dependencies": {
+          "Mapster": {
+            "target": "Package",
+            "version": "[10.0.11, )"
+          },
+          "Mapster.DependencyInjection": {
+            "target": "Package",
+            "version": "[10.0.11, )"
+          },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[10.0.8, )"

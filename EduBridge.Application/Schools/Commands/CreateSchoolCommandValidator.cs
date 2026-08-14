@@ -3,10 +3,10 @@ using EduBridge.Application.Schools.Commands.CreateSchool;
 
 namespace EduBridge.Application.Schools.Validators;
 
-public sealed class CreateSchoolValidator 
+public sealed class CreateSchoolCommandValidator 
     : AbstractValidator<CreateSchoolCommand>
 {
-    public CreateSchoolValidator()
+    public CreateSchoolCommandValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty()

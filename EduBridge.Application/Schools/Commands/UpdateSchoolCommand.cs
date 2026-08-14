@@ -1,7 +1,7 @@
 using EduBridge.Application.Interfaces;
-using EduBridge.Application.Schools.DTOs.Responses;
+using EduBridge.Domain.Entities;
 using MediatR;
-//update school validator like create 
+
 namespace EduBridge.Application.Schools.Commands.UpdateSchool;
 
 public sealed record UpdateSchoolCommand(
@@ -10,11 +10,10 @@ public sealed record UpdateSchoolCommand(
     string Email,
     string PhoneNumber,
     string Address)
-    : IRequest<SchoolResponse?>;
-
+    : IRequest<School?>;
 
 public sealed class UpdateSchoolCommandHandler
-    : IRequestHandler<UpdateSchoolCommand, SchoolResponse?>
+    : IRequestHandler<UpdateSchoolCommand, School?>
 {
     private readonly ISchoolRepository _schoolRepository;
 
@@ -24,8 +23,7 @@ public sealed class UpdateSchoolCommandHandler
         _schoolRepository = schoolRepository;
     }
 
-
-    public async Task<SchoolResponse?> Handle(
+    public async Task<School?> Handle(
         UpdateSchoolCommand request,
         CancellationToken cancellationToken)
     {
@@ -33,12 +31,10 @@ public sealed class UpdateSchoolCommandHandler
             request.Id,
             cancellationToken);
 
-
         if (school is null)
         {
             return null;
         }
-
 
         school.Rename(request.Name);
 
@@ -47,18 +43,9 @@ public sealed class UpdateSchoolCommandHandler
             request.PhoneNumber,
             request.Address);
 
-
         await _schoolRepository.SaveChangesAsync(
             cancellationToken);
 
-
-        return new SchoolResponse(
-            school.Id,
-            school.Name,
-            school.Code,
-            school.Email,
-            school.PhoneNumber,
-            school.Address,
-            school.Status.ToString());
+        return school;
     }
-}    
+}
