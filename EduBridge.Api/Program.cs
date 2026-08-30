@@ -6,7 +6,9 @@ using Mapster;
 using MapsterMapper;
 using EduBridge.Api.Mapping;
 using EduBridge.Domain.Entities;
+
 using Microsoft.AspNetCore.Identity;
+using EduBridge.Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +58,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider
+        .GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+    await IdentitySeeder.SeedRolesAsync(roleManager);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -67,9 +77,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 }
 
+
 app.UseCors("AngularClient");
 app.UseExceptionHandler();
 
 app.MapControllers();
-
 app.Run();
