@@ -5,13 +5,36 @@ using EduBridge.Api.Exceptions;
 using Mapster;
 using MapsterMapper;
 using EduBridge.Api.Mapping;
+using EduBridge.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
+
 builder.Services.AddPersistence(builder.Configuration);
+
+builder.Services
+    .AddIdentityCore<EduBridgeUser>(options =>
+    {
+        options.User.RequireUniqueEmail = true;
+
+        options.Password.RequiredLength = 8;
+        options.Password.RequireDigit = true;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequireNonAlphanumeric = true;
+
+        options.Lockout.MaxFailedAccessAttempts = 5;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+        options.Lockout.AllowedForNewUsers = true;
+
+    })
+    .AddRoles<IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<EduBridgeDbContext>();
+
 builder.Services.AddApplication();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
@@ -43,7 +66,10 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
+
 app.UseCors("AngularClient");
 app.UseExceptionHandler();
+
 app.MapControllers();
+
 app.Run();

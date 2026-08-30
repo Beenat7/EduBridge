@@ -10,3 +10,4 @@ C:\Users\mmmm\EduBridge\EduBridge.Domain\obj\Debug\net10.0\EduBridge.Domain.dll
 C:\Users\mmmm\EduBridge\EduBridge.Domain\obj\Debug\net10.0\refint\EduBridge.Domain.dll
 C:\Users\mmmm\EduBridge\EduBridge.Domain\obj\Debug\net10.0\EduBridge.Domain.pdb
 C:\Users\mmmm\EduBridge\EduBridge.Domain\obj\Debug\net10.0\ref\EduBridge.Domain.dll
+C:\Users\mmmm\EduBridge\EduBridge.Domain\obj\Debug\net10.0\EduBridge.Domain.csproj.AssemblyReference.cache
