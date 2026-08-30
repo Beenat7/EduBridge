@@ -140,3 +140,8 @@ C:\Users\mmmm\EduBridge\EduBridge.Api\obj\Debug\net10.0\EduBridge.Api.pdb
 C:\Users\mmmm\EduBridge\EduBridge.Api\obj\Debug\net10.0\EduBridge.Api.genruntimeconfig.cache
 C:\Users\mmmm\EduBridge\EduBridge.Api\obj\Debug\net10.0\ref\EduBridge.Api.dll
 C:\Users\mmmm\EduBridge\EduBridge.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\mmmm\EduBridge\EduBridge.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\mmmm\EduBridge\EduBridge.Api\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
+C:\Users\mmmm\EduBridge\EduBridge.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\mmmm\EduBridge\EduBridge.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\mmmm\EduBridge\EduBridge.Api\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
