@@ -32,6 +32,7 @@ public sealed class StudentConfiguration
             .IsUnique();
 
         builder.Property(s => s.DateOfBirth)
+            .HasColumnType("date")
             .IsRequired();
 
         builder.Property(s => s.Gender)
