@@ -93,8 +93,11 @@ using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider
         .GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+    var userManager = scope.ServiceProvider
+        .GetRequiredService<UserManager<EduBridgeUser>>();
 
     await IdentitySeeder.SeedRolesAsync(roleManager);
+    await IdentitySeeder.SeedDevelopmentUserAsync(userManager);
 }
 
 if (app.Environment.IsDevelopment())
