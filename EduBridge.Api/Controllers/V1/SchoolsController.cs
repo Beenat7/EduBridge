@@ -12,11 +12,13 @@ using MapsterMapper;
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EduBridge.Api.Controllers.V1;
 
 [ApiController]
 [Route("api/v1/[controller]")]
+[Authorize(Roles = "PlatformAdmin")]
 public sealed class SchoolsController : ControllerBase
 {
     private readonly ISender _sender;

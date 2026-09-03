@@ -10,17 +10,24 @@ using EduBridge.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using EduBridge.Infrastructure.Identity;
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.OpenApi;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 using EduBridge.Application.Interfaces;
+using Microsoft.AspNetCore.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+});
 
 builder.Services.AddPersistence(builder.Configuration);
 
@@ -120,3 +127,37 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.Run();
+
+internal sealed class BearerSecuritySchemeTransformer(
+    IAuthenticationSchemeProvider authenticationSchemeProvider)
+    : IOpenApiDocumentTransformer
+{
+    public async Task TransformAsync(
+        OpenApiDocument document,
+        OpenApiDocumentTransformerContext context,
+        CancellationToken cancellationToken)
+    {
+        var authenticationSchemes =
+            await authenticationSchemeProvider.GetAllSchemesAsync();
+
+        if (authenticationSchemes.Any(
+            scheme => scheme.Name == "Bearer"))
+        {
+            var securitySchemes =
+                new Dictionary<string, IOpenApiSecurityScheme>
+                {
+                    ["Bearer"] = new OpenApiSecurityScheme
+                    {
+                        Type = SecuritySchemeType.Http,
+                        Scheme = "bearer",
+                        In = ParameterLocation.Header,
+                        BearerFormat = "JWT"
+                    }
+                };
+
+            document.Components ??= new OpenApiComponents();
+
+            document.Components.SecuritySchemes = securitySchemes;
+        }
+    }
+}
