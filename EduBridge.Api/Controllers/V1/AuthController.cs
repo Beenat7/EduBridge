@@ -1,11 +1,14 @@
-using EduBridge.Api.Contracts.Auth;
+using EduBridge.Api.Authentication;
 using EduBridge.Application.Interfaces;
 using EduBridge.Domain.Entities;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 namespace EduBridge.Api.Controllers.V1;
+
+
 
 [ApiController]
 [Route("api/v1/[controller]")]
@@ -60,4 +63,37 @@ public sealed class AuthController : ControllerBase
 
         return Ok(new LoginResponse(token, expiresAt));
     }
+
+            [HttpGet("me")]
+        [Authorize]
+        [ProducesResponseType(
+            typeof(CurrentUserResponse),
+            StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<CurrentUserResponse>> Me()
+        {
+            var userIdValue = User.FindFirstValue(
+                ClaimTypes.NameIdentifier);
+
+            if (!Guid.TryParse(userIdValue, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            var user = await _userManager.FindByIdAsync(
+                userId.ToString());
+
+            if (user is null)
+            {
+                return Unauthorized();
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return Ok(new CurrentUserResponse(
+                user.Id,
+                user.Email ?? string.Empty,
+                roles));
+        }
+
 }

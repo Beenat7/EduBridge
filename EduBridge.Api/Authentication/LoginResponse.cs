@@ -1,4 +1,4 @@
-namespace EduBridge.Api.Contracts.Auth;
+namespace EduBridge.Api.Authentication;
 
 public sealed record LoginResponse(
     string Token,
