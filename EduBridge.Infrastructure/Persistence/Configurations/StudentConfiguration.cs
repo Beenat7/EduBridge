@@ -42,6 +42,9 @@ public sealed class StudentConfiguration
         builder.Property(s => s.SchoolId)
             .IsRequired();
 
+        builder.Property(s => s.ParentId)
+                   .IsRequired(false);
+
         builder.Property(s => s.Grade)
             .IsRequired()
             .HasMaxLength(50);
@@ -54,5 +57,10 @@ public sealed class StudentConfiguration
             .WithMany()
             .HasForeignKey(s => s.SchoolId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne<Parent>()
+        .WithMany()
+        .HasForeignKey(s => s.ParentId)
+        .OnDelete(DeleteBehavior.Restrict);    
     }
 }

@@ -5,6 +5,5 @@ public enum ParentStatus
     Pending,
     Active,
     Inactive,
-    Archived,
-    Rejected
+    Archived
 }

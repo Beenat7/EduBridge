@@ -17,8 +17,8 @@ public static class DependencyInjection
                 configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<ISchoolRepository, SchoolRepository>();
-
         services.AddScoped<IStudentRepository, StudentRepository>();
+        services.AddScoped<IParentRepository, ParentRepository>();
 
         return services;
     }
