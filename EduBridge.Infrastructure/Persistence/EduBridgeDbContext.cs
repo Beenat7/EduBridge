@@ -16,6 +16,7 @@ public sealed class EduBridgeDbContext : IdentityDbContext<EduBridgeUser, Identi
     public DbSet<Student> Students => Set<Student>();
     public DbSet<Parent> Parents => Set<Parent>();
     public DbSet<Teacher> Teachers => Set<Teacher>();
+    public DbSet<Subject> Subjects => Set<Subject>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

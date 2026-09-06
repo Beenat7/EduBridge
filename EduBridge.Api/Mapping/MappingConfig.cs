@@ -2,6 +2,7 @@ using EduBridge.Application.Parents.DTOs.Responses;
 using EduBridge.Application.Schools.DTOs.Responses;
 using EduBridge.Application.Students.DTOs.Responses;
 using EduBridge.Application.Teachers.DTOs.Responses;
+using EduBridge.Application.Subjects.DTOs.Responses;
 using EduBridge.Domain.Entities;
 using Mapster;
 
@@ -33,6 +34,12 @@ public static class MappingConfig
                 source => source.Status.ToString());         
 
         TypeAdapterConfig<Parent, ParentResponseDto>
+            .NewConfig()
+            .Map(
+                destination => destination.Status,
+                source => source.Status.ToString());
+
+        TypeAdapterConfig<Subject, SubjectResponseDto>
             .NewConfig()
             .Map(
                 destination => destination.Status,
