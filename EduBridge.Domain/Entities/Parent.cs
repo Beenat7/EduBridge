@@ -1,139 +1,143 @@
-using EduBridge.Domain.Common.Enums;
-namespace EduBridge.Domain.Entities;
 using EduBridge.Domain.Common.Base;
+using EduBridge.Domain.Common.Enums;
+
+namespace EduBridge.Domain.Entities;
 
 public class Parent : AuditableEntity
 {
-    public string FirstName { get; private set; }
-    public string MiddleName { get; private set; }
-    public string LastName { get; private set; }
+public Guid SchoolId { get; private set; }
 
-    public string Email { get; private set; }
-    public string PhoneNumber { get; private set; }
-    public string Address { get; private set; }
+public string FirstName { get; private set; }
 
-    public ParentStatus Status { get; private set; }
+public string MiddleName { get; private set; }
 
-    private Parent()
-    {
-    }
+public string LastName { get; private set; }
 
-    public Parent(
-        string firstName,
-        string middleName,
-        string lastName,
-        string email,
-        string phoneNumber,
-        string address)
-    {
-        if (string.IsNullOrWhiteSpace(firstName))
-            throw new ArgumentException(
-                "Parent first name cannot be empty.",
-                nameof(firstName));
+public string Email { get; private set; }
 
-        if (string.IsNullOrWhiteSpace(middleName))
-            throw new ArgumentException(
-                "Parent middle name cannot be empty.",
-                nameof(middleName));
+public string PhoneNumber { get; private set; }
 
-        if (string.IsNullOrWhiteSpace(lastName))
-            throw new ArgumentException(
-                "Parent last name cannot be empty.",
-                nameof(lastName));
+public ParentStatus Status { get; private set; }
 
-        if (string.IsNullOrWhiteSpace(email))
-            throw new ArgumentException(
-                "Parent email cannot be empty.",
-                nameof(email));
+private Parent()
+{
+}
 
-        if (string.IsNullOrWhiteSpace(phoneNumber))
-            throw new ArgumentException(
-                "Parent phone number cannot be empty.",
-                nameof(phoneNumber));
+public Parent(
+    Guid schoolId,
+    string firstName,
+    string middleName,
+    string lastName,
+    string email,
+    string phoneNumber)
+{
+    if (schoolId == Guid.Empty)
+        throw new ArgumentException(
+            "School ID cannot be empty.",
+            nameof(schoolId));
 
-        if (string.IsNullOrWhiteSpace(address))
-            throw new ArgumentException(
-                "Parent address cannot be empty.",
-                nameof(address));
+    if (string.IsNullOrWhiteSpace(firstName))
+        throw new ArgumentException(
+            "Parent first name cannot be empty.",
+            nameof(firstName));
 
-        FirstName = firstName;
-        MiddleName = middleName;
-        LastName = lastName;
-        Email = email;
-        PhoneNumber = phoneNumber;
-        Address = address;
+    if (string.IsNullOrWhiteSpace(lastName))
+        throw new ArgumentException(
+            "Parent last name cannot be empty.",
+            nameof(lastName));
 
-        Status = ParentStatus.Pending;
-    }
+    if (string.IsNullOrWhiteSpace(email))
+        throw new ArgumentException(
+            "Parent email cannot be empty.",
+            nameof(email));
 
-    public void Update(
-        string firstName,
-        string middleName,
-        string lastName,
-        string email,
-        string phoneNumber,
-        string address)
-    {
-        if (string.IsNullOrWhiteSpace(firstName))
-            throw new ArgumentException(
-                "Parent first name cannot be empty.",
-                nameof(firstName));
+    if (string.IsNullOrWhiteSpace(phoneNumber))
+        throw new ArgumentException(
+            "Parent phone number cannot be empty.",
+            nameof(phoneNumber));
 
-        if (string.IsNullOrWhiteSpace(middleName))
-            throw new ArgumentException(
-                "Parent middle name cannot be empty.",
-                nameof(middleName));
+    SchoolId = schoolId;
 
-        if (string.IsNullOrWhiteSpace(lastName))
-            throw new ArgumentException(
-                "Parent last name cannot be empty.",
-                nameof(lastName));
+    FirstName = firstName.Trim();
 
-        if (string.IsNullOrWhiteSpace(email))
-            throw new ArgumentException(
-                "Parent email cannot be empty.",
-                nameof(email));
+    MiddleName = middleName?.Trim() ?? string.Empty;
 
-        if (string.IsNullOrWhiteSpace(phoneNumber))
-            throw new ArgumentException(
-                "Parent phone number cannot be empty.",
-                nameof(phoneNumber));
+    LastName = lastName.Trim();
 
-        if (string.IsNullOrWhiteSpace(address))
-            throw new ArgumentException(
-                "Parent address cannot be empty.",
-                nameof(address));
+    Email = email.Trim();
 
-        FirstName = firstName;
-        MiddleName = middleName;
-        LastName = lastName;
-        Email = email;
-        PhoneNumber = phoneNumber;
-        Address = address;
-    }
+    PhoneNumber = phoneNumber.Trim();
 
-    public void Approve()
-    {
-        Status = ParentStatus.Active;
-    }
+    Status = ParentStatus.Pending;
+}
 
-    public void Reject()
-    {
-        Status = ParentStatus.Rejected;
-    }
+public void Update(
+    string firstName,
+    string middleName,
+    string lastName,
+    string email,
+    string phoneNumber)
+{
+    if (string.IsNullOrWhiteSpace(firstName))
+        throw new ArgumentException(
+            "Parent first name cannot be empty.",
+            nameof(firstName));
 
-    public void Activate()
-    {
-        Status = ParentStatus.Active;
-    }
+    if (string.IsNullOrWhiteSpace(lastName))
+        throw new ArgumentException(
+            "Parent last name cannot be empty.",
+            nameof(lastName));
 
-    public void Deactivate()
-    {
-        Status = ParentStatus.Inactive;
-    }
+    if (string.IsNullOrWhiteSpace(email))
+        throw new ArgumentException(
+            "Parent email cannot be empty.",
+            nameof(email));
 
-    public void Archive()
-    {
-        Status = ParentStatus.Archived;
-    }
+    if (string.IsNullOrWhiteSpace(phoneNumber))
+        throw new ArgumentException(
+            "Parent phone number cannot be empty.",
+            nameof(phoneNumber));
+
+    FirstName = firstName.Trim();
+
+    MiddleName = middleName?.Trim() ?? string.Empty;
+
+    LastName = lastName.Trim();
+
+    Email = email.Trim();
+
+    PhoneNumber = phoneNumber.Trim();
+
+    MarkAsModified();
+}
+
+public void Activate()
+{
+    if (Status == ParentStatus.Archived)
+        throw new InvalidOperationException(
+            "Archived parents cannot be activated.");
+
+    Status = ParentStatus.Active;
+
+    MarkAsModified();
+}
+
+public void Deactivate()
+{
+    if (Status == ParentStatus.Archived)
+        throw new InvalidOperationException(
+            "Archived parents cannot be deactivated.");
+
+    Status = ParentStatus.Inactive;
+
+    MarkAsModified();
+}
+
+public void Archive()
+{
+    Status = ParentStatus.Archived;
+
+    MarkAsModified();
+}
+
 }

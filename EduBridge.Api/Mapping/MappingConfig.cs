@@ -1,3 +1,4 @@
+using EduBridge.Application.Parents.DTOs.Responses;
 using EduBridge.Application.Schools.DTOs.Responses;
 using EduBridge.Application.Students.DTOs.Responses;
 using EduBridge.Application.Teachers.DTOs.Responses;
@@ -23,7 +24,7 @@ public static class MappingConfig
                 source => source.Status.ToString())
             .Map(
                 destination => destination.Gender,
-                source => source.Gender.ToString());   
+                source => source.Gender.ToString());    
 
         TypeAdapterConfig<Teacher, TeacherResponseDto>
             .NewConfig()
@@ -31,6 +32,10 @@ public static class MappingConfig
                 destination => destination.Status,
                 source => source.Status.ToString());         
 
-
+        TypeAdapterConfig<Parent, ParentResponseDto>
+            .NewConfig()
+            .Map(
+                destination => destination.Status,
+                source => source.Status.ToString());
     }
 }
