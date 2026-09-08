@@ -207,4 +207,71 @@ public sealed class TeachersController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpPost("{id:guid}/class")]
+    [ProducesResponseType(
+        typeof(TeacherResponseDto),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<TeacherResponseDto>> AssignToClass(
+        Guid id,
+        ClassAssignmentRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        var teacher = await _sender.Send(
+            new AssignTeacherToClassCommand(id, request.ClassId),
+            cancellationToken);
+
+        if (teacher is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<TeacherResponseDto>(teacher));
+    }
+
+    [HttpPut("{id:guid}/class")]
+    [ProducesResponseType(
+        typeof(TeacherResponseDto),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<TeacherResponseDto>> ChangeClass(
+        Guid id,
+        ClassAssignmentRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        var teacher = await _sender.Send(
+            new ChangeTeacherClassCommand(id, request.ClassId),
+            cancellationToken);
+
+        if (teacher is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<TeacherResponseDto>(teacher));
+    }
+
+    [HttpDelete("{id:guid}/class")]
+    [ProducesResponseType(
+        typeof(TeacherResponseDto),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<TeacherResponseDto>> RemoveFromClass(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var teacher = await _sender.Send(
+            new RemoveTeacherFromClassCommand(id),
+            cancellationToken);
+
+        if (teacher is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<TeacherResponseDto>(teacher));
+    }
 }

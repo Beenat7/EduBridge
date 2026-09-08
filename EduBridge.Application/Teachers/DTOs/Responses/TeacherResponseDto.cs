@@ -10,4 +10,6 @@ public sealed record TeacherResponseDto(
     string PhoneNumber,
     string EmployeeCode,
     DateOnly HireDate,
+    Guid? ClassId,
+    string? ClassName,
     string Status);

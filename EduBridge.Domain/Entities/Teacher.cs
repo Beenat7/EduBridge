@@ -6,6 +6,8 @@ namespace EduBridge.Domain.Entities;
 public class Teacher : AuditableEntity
 {
     public Guid SchoolId { get; private set; }
+    public Guid? ClassId { get; private set; }
+    public Class? Class { get; private set; }
 
     public string FirstName { get; private set; }
     public string MiddleName { get; private set; }
@@ -112,6 +114,37 @@ public class Teacher : AuditableEntity
         PhoneNumber = phoneNumber.Trim();
         EmployeeCode = employeeCode.Trim();
         HireDate = hireDate;
+
+        MarkAsModified();
+    }
+
+    public void AssignToClass(Guid classId)
+    {
+        if (classId == Guid.Empty)
+            throw new ArgumentException(
+                "Class ID cannot be empty.",
+                nameof(classId));
+
+        ClassId = classId;
+
+        MarkAsModified();
+    }
+
+    public void ChangeClass(Guid classId)
+    {
+        if (classId == Guid.Empty)
+            throw new ArgumentException(
+                "Class ID cannot be empty.",
+                nameof(classId));
+
+        ClassId = classId;
+
+        MarkAsModified();
+    }
+
+    public void RemoveFromClass()
+    {
+        ClassId = null;
 
         MarkAsModified();
     }

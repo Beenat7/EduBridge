@@ -16,6 +16,11 @@ public sealed class TeacherConfiguration
         builder.Property(t => t.SchoolId)
             .IsRequired();
 
+        builder.Property(t => t.ClassId)
+            .IsRequired(false);
+
+        builder.HasIndex(t => t.ClassId);
+
         builder.Property(t => t.FirstName)
             .IsRequired()
             .HasMaxLength(100);
@@ -56,6 +61,11 @@ public sealed class TeacherConfiguration
         builder.HasOne<School>()
             .WithMany()
             .HasForeignKey(t => t.SchoolId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(t => t.Class)
+            .WithOne()
+            .HasForeignKey<Teacher>(t => t.ClassId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

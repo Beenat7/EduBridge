@@ -35,7 +35,10 @@ public static class MappingConfig
             .NewConfig()
             .Map(
                 destination => destination.Status,
-                source => source.Status.ToString());         
+                source => source.Status.ToString())
+            .Map(
+                destination => destination.ClassName,
+                source => source.Class == null ? null : source.Class.Name);
 
         TypeAdapterConfig<Parent, ParentResponseDto>
             .NewConfig()
