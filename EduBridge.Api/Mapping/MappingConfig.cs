@@ -3,6 +3,7 @@ using EduBridge.Application.Schools.DTOs.Responses;
 using EduBridge.Application.Students.DTOs.Responses;
 using EduBridge.Application.Teachers.DTOs.Responses;
 using EduBridge.Application.Subjects.DTOs.Responses;
+using EduBridge.Application.Classes.DTOs.Responses;
 using EduBridge.Domain.Entities;
 using Mapster;
 
@@ -44,5 +45,14 @@ public static class MappingConfig
             .Map(
                 destination => destination.Status,
                 source => source.Status.ToString());
+
+        TypeAdapterConfig<Class, ClassResponseDto>
+            .NewConfig()
+            .Map(
+                destination => destination.Status,
+                source => source.Status.ToString())
+            .Map(
+                destination => destination.GradeLevel,
+                source => source.GradeLevel.ToString());
     }
 }
