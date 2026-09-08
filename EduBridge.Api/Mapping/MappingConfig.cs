@@ -60,5 +60,20 @@ public static class MappingConfig
             .Map(
                 destination => destination.GradeLevel,
                 source => source.GradeLevel.ToString());
+
+        TypeAdapterConfig<Subject, ClassSubjectResponseDto>
+            .NewConfig()
+            .Map(
+                destination => destination.Status,
+                source => source.Status.ToString());
+
+        TypeAdapterConfig<Class, SubjectClassResponseDto>
+            .NewConfig()
+            .Map(
+                destination => destination.GradeLevel,
+                source => source.GradeLevel.ToString())
+            .Map(
+                destination => destination.Status,
+                source => source.Status.ToString());
     }
 }

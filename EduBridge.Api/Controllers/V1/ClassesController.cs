@@ -193,4 +193,66 @@ public sealed class ClassesController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpPost("{id:guid}/subjects")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> AddSubject(
+        Guid id,
+        AddSubjectToClassRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        var classSubject = await _sender.Send(
+            new AddSubjectToClassCommand(id, request.SubjectId),
+            cancellationToken);
+
+        if (classSubject is null)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+
+    [HttpGet("{id:guid}/subjects")]
+    [ProducesResponseType(
+        typeof(IReadOnlyList<ClassSubjectResponseDto>),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IReadOnlyList<ClassSubjectResponseDto>>> GetSubjects(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var subjects = await _sender.Send(
+            new GetClassSubjectsQuery(id),
+            cancellationToken);
+
+        if (subjects is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<IReadOnlyList<ClassSubjectResponseDto>>(subjects));
+    }
+
+    [HttpDelete("{id:guid}/subjects/{subjectId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RemoveSubject(
+        Guid id,
+        Guid subjectId,
+        CancellationToken cancellationToken)
+    {
+        var classSubject = await _sender.Send(
+            new RemoveSubjectFromClassCommand(id, subjectId),
+            cancellationToken);
+
+        if (classSubject is null)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
 }
