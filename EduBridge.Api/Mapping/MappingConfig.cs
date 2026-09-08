@@ -26,7 +26,10 @@ public static class MappingConfig
                 source => source.Status.ToString())
             .Map(
                 destination => destination.Gender,
-                source => source.Gender.ToString());    
+                source => source.Gender.ToString())
+            .Map(
+                destination => destination.ClassName,
+                source => source.Class == null ? null : source.Class.Name);
 
         TypeAdapterConfig<Teacher, TeacherResponseDto>
             .NewConfig()

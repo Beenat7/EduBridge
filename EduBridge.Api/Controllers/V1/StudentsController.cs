@@ -6,6 +6,7 @@ using EduBridge.Application.Students.Queries;
 using MapsterMapper;
 using MediatR;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduBridge.Api.Controllers.V1;
@@ -192,5 +193,75 @@ public sealed class StudentsController : ControllerBase
             _mapper.Map<StudentResponseDto>(student);
 
         return Ok(response);
+    }
+
+    [HttpPost("{id:guid}/class")]
+    [Authorize]
+    [ProducesResponseType(
+        typeof(StudentResponseDto),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<StudentResponseDto>> AssignToClass(
+        Guid id,
+        ClassAssignmentRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        var student = await _sender.Send(
+            new AssignStudentToClassCommand(id, request.ClassId),
+            cancellationToken);
+
+        if (student is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<StudentResponseDto>(student));
+    }
+
+    [HttpPut("{id:guid}/class")]
+    [Authorize]
+    [ProducesResponseType(
+        typeof(StudentResponseDto),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<StudentResponseDto>> ChangeClass(
+        Guid id,
+        ClassAssignmentRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        var student = await _sender.Send(
+            new ChangeStudentClassCommand(id, request.ClassId),
+            cancellationToken);
+
+        if (student is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<StudentResponseDto>(student));
+    }
+
+    [HttpDelete("{id:guid}/class")]
+    [Authorize]
+    [ProducesResponseType(
+        typeof(StudentResponseDto),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<StudentResponseDto>> RemoveFromClass(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var student = await _sender.Send(
+            new RemoveStudentFromClassCommand(id),
+            cancellationToken);
+
+        if (student is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<StudentResponseDto>(student));
     }
 }

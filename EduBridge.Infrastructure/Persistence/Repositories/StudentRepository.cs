@@ -27,6 +27,7 @@ public sealed class StudentRepository : IStudentRepository
         CancellationToken cancellationToken = default)
     {
         return await _context.Students
+            .Include(s => s.Class)
             .FirstOrDefaultAsync(
                 s => s.Id == id,
                 cancellationToken);
@@ -46,6 +47,7 @@ public sealed class StudentRepository : IStudentRepository
         CancellationToken cancellationToken = default)
     {
         return await _context.Students
+            .Include(s => s.Class)
             .ToListAsync(cancellationToken);
     }
 

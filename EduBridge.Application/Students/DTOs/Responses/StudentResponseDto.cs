@@ -10,4 +10,6 @@ public sealed record StudentResponseDto(
     string Gender,
     Guid SchoolId,
     string Grade,
+    Guid? ClassId,
+    string? ClassName,
     string Status);

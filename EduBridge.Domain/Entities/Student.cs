@@ -13,6 +13,8 @@ public DateTime DateOfBirth { get; private set; }
 public Gender Gender { get; private set; }
 public Guid SchoolId { get; private set; }
 public Guid? ParentId { get; private set; }
+public Guid? ClassId { get; private set; }
+public Class? Class { get; private set; }
 public string Grade { get; private set; }
 public StudentStatus Status { get; private set; }
 
@@ -121,6 +123,37 @@ public void AssignParent(Guid parentId)
             nameof(parentId));
 
     ParentId = parentId;
+
+    MarkAsModified();
+}
+
+public void AssignToClass(Guid classId)
+{
+    if (classId == Guid.Empty)
+        throw new ArgumentException(
+            "Class ID cannot be empty.",
+            nameof(classId));
+
+    ClassId = classId;
+
+    MarkAsModified();
+}
+
+public void ChangeClass(Guid classId)
+{
+    if (classId == Guid.Empty)
+        throw new ArgumentException(
+            "Class ID cannot be empty.",
+            nameof(classId));
+
+    ClassId = classId;
+
+    MarkAsModified();
+}
+
+public void RemoveFromClass()
+{
+    ClassId = null;
 
     MarkAsModified();
 }
