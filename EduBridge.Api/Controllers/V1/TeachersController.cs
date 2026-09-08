@@ -274,4 +274,66 @@ public sealed class TeachersController : ControllerBase
 
         return Ok(_mapper.Map<TeacherResponseDto>(teacher));
     }
+
+    [HttpPost("{id:guid}/subjects")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> AssignSubject(
+        Guid id,
+        AssignSubjectToTeacherRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        var teacherSubject = await _sender.Send(
+            new AssignSubjectToTeacherCommand(id, request.SubjectId),
+            cancellationToken);
+
+        if (teacherSubject is null)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+
+    [HttpGet("{id:guid}/subjects")]
+    [ProducesResponseType(
+        typeof(IReadOnlyList<TeacherSubjectResponseDto>),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IReadOnlyList<TeacherSubjectResponseDto>>> GetSubjects(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var subjects = await _sender.Send(
+            new GetTeacherSubjectsQuery(id),
+            cancellationToken);
+
+        if (subjects is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<IReadOnlyList<TeacherSubjectResponseDto>>(subjects));
+    }
+
+    [HttpDelete("{id:guid}/subjects/{subjectId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RemoveSubject(
+        Guid id,
+        Guid subjectId,
+        CancellationToken cancellationToken)
+    {
+        var teacherSubject = await _sender.Send(
+            new RemoveSubjectFromTeacherCommand(id, subjectId),
+            cancellationToken);
+
+        if (teacherSubject is null)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
 }

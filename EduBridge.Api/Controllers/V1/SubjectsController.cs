@@ -216,4 +216,25 @@ public sealed class SubjectsController : ControllerBase
 
         return Ok(_mapper.Map<IReadOnlyList<SubjectClassResponseDto>>(classes));
     }
+
+    [HttpGet("{id:guid}/teachers")]
+    [ProducesResponseType(
+        typeof(IReadOnlyList<SubjectTeacherResponseDto>),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IReadOnlyList<SubjectTeacherResponseDto>>> GetTeachers(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var teachers = await _sender.Send(
+            new GetSubjectTeachersQuery(id),
+            cancellationToken);
+
+        if (teachers is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<IReadOnlyList<SubjectTeacherResponseDto>>(teachers));
+    }
 }

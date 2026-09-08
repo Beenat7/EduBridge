@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<ISubjectRepository, SubjectRepository>();
         services.AddScoped<IClassRepository, ClassRepository>();
         services.AddScoped<IClassSubjectRepository, ClassSubjectRepository>();
+        services.AddScoped<ITeacherSubjectRepository, TeacherSubjectRepository>();
 
         return services;
     }

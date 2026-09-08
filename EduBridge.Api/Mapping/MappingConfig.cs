@@ -75,5 +75,17 @@ public static class MappingConfig
             .Map(
                 destination => destination.Status,
                 source => source.Status.ToString());
+
+        TypeAdapterConfig<Subject, TeacherSubjectResponseDto>
+            .NewConfig()
+            .Map(
+                destination => destination.Status,
+                source => source.Status.ToString());
+
+        TypeAdapterConfig<Teacher, SubjectTeacherResponseDto>
+            .NewConfig()
+            .Map(
+                destination => destination.Status,
+                source => source.Status.ToString());
     }
 }
