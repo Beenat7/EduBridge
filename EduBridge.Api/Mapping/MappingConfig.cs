@@ -1,3 +1,4 @@
+using EduBridge.Application.Announcements.DTOs.Responses;
 using EduBridge.Application.Parents.DTOs.Responses;
 using EduBridge.Application.Schools.DTOs.Responses;
 using EduBridge.Application.Students.DTOs.Responses;
@@ -60,6 +61,12 @@ public static class MappingConfig
             .Map(
                 destination => destination.GradeLevel,
                 source => source.GradeLevel.ToString());
+
+        TypeAdapterConfig<Announcement, AnnouncementResponseDto>
+            .NewConfig()
+            .Map(
+                destination => destination.Status,
+                source => source.Status.ToString());
 
         TypeAdapterConfig<Subject, ClassSubjectResponseDto>
             .NewConfig()

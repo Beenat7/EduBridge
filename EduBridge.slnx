@@ -3,4 +3,5 @@
   <Project Path="EduBridge.Application/EduBridge.Application.csproj" />
   <Project Path="EduBridge.Domain/EduBridge.Domain.csproj" />
   <Project Path="EduBridge.Infrastructure/EduBridge.Infrastructure.csproj" />
+  <Project Path="EduBridge.Tests/EduBridge.Tests.csproj" />
 </Solution>
