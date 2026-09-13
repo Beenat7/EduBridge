@@ -19,6 +19,7 @@ public sealed class EduBridgeDbContext : IdentityDbContext<EduBridgeUser, Identi
     public DbSet<Subject> Subjects => Set<Subject>();
     public DbSet<Class> Classes => Set<Class>();
     public DbSet<Announcement> Announcements => Set<Announcement>();
+    public DbSet<DirectMessage> DirectMessages => Set<DirectMessage>();
     public DbSet<ClassSubject> ClassSubjects => Set<ClassSubject>();
     public DbSet<TeacherSubject> TeacherSubjects => Set<TeacherSubject>();
 

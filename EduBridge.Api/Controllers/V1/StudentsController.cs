@@ -195,6 +195,30 @@ public sealed class StudentsController : ControllerBase
         return Ok(response);
     }
 
+    [HttpPut("{id:guid}/parent")]
+    [Authorize]
+    [ProducesResponseType(
+        typeof(StudentResponseDto),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<StudentResponseDto>> AssignParent(
+        Guid id,
+        ParentAssignmentRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        var student = await _sender.Send(
+            new AssignStudentToParentCommand(id, request.ParentId),
+            cancellationToken);
+
+        if (student is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<StudentResponseDto>(student));
+    }
+
     [HttpPost("{id:guid}/class")]
     [Authorize]
     [ProducesResponseType(

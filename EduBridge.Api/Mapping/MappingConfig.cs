@@ -1,4 +1,5 @@
 using EduBridge.Application.Announcements.DTOs.Responses;
+using EduBridge.Application.DirectMessages.DTOs.Responses;
 using EduBridge.Application.Parents.DTOs.Responses;
 using EduBridge.Application.Schools.DTOs.Responses;
 using EduBridge.Application.Students.DTOs.Responses;
@@ -67,6 +68,15 @@ public static class MappingConfig
             .Map(
                 destination => destination.Status,
                 source => source.Status.ToString());
+
+        TypeAdapterConfig<DirectMessage, DirectMessageResponseDto>
+            .NewConfig()
+            .Map(
+                destination => destination.SenderType,
+                source => source.SenderType.ToString())
+            .Map(
+                destination => destination.RecipientType,
+                source => source.RecipientType.ToString());
 
         TypeAdapterConfig<Subject, ClassSubjectResponseDto>
             .NewConfig()

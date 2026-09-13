@@ -17,5 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EduBridge.Domain\EduBridge.Domain.csproj" />
+    <ProjectReference Include="..\EduBridge.Application\EduBridge.Application.csproj" />
   </ItemGroup>
 </Project>
